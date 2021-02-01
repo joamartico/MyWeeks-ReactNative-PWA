@@ -1,21 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { authentication } from "./firebase";
+import Routes from "./src/navigation/Routes";
+import Context from "./src/context/ContextComponent";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+	// const [user, setUser] = useState(undefined);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	// useEffect(() => {
+	// 	authentication.onAuthStateChanged((res) => {
+	// 		res == null ? setUser(false) : setUser(true);
+	// 		console.log("RES: ", res);
+	// 	});
+	// }, []);
+
+	// if(authentication.currentUser == null){
+	// 	return (
+	// 		<SafeAreaProvider>
+	// 			<Routes initialRoute="SignIn" />
+	// 		</SafeAreaProvider>
+	// 	);
+	// }
+	// if (user == undefined) {
+	// 	return <Text>Loading</Text>;
+	// } else {
+	// 	return (
+	// 		<SafeAreaProvider>
+	// 			<Routes initialRoute={user == true ? "BottomTabs" : "SignIn"} />
+	// 		</SafeAreaProvider>
+	// 	);
+	// }
+
+	return (
+		<SafeAreaProvider>
+			<Context>
+				<Routes />
+			</Context>
+		</SafeAreaProvider>
+	);
+}
