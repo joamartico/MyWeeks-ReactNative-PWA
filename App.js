@@ -7,37 +7,26 @@ import Routes from "./src/navigation/Routes";
 import Context from "./src/context/ContextComponent";
 
 export default function App() {
-	// const [user, setUser] = useState(undefined);
+	const [initialRoute, setInitialRoute] = useState(undefined);
 
-	// useEffect(() => {
-	// 	authentication.onAuthStateChanged((res) => {
-	// 		res == null ? setUser(false) : setUser(true);
-	// 		console.log("RES: ", res);
-	// 	});
-	// }, []);
+	useEffect(() => {
+		authentication.onAuthStateChanged((res) => {
+			res == null
+				? setInitialRoute("SignIn")
+				: setInitialRoute("BottomTabs");
+		});
+	}, []);
 
-	// if(authentication.currentUser == null){
-	// 	return (
-	// 		<SafeAreaProvider>
-	// 			<Routes initialRoute="SignIn" />
-	// 		</SafeAreaProvider>
-	// 	);
-	// }
-	// if (user == undefined) {
-	// 	return <Text>Loading</Text>;
-	// } else {
-	// 	return (
-	// 		<SafeAreaProvider>
-	// 			<Routes initialRoute={user == true ? "BottomTabs" : "SignIn"} />
-	// 		</SafeAreaProvider>
-	// 	);
-	// }
+	if (initialRoute === undefined) {
+		return <Text>Loading...</Text>;
+	} else {
 
-	return (
-		<SafeAreaProvider>
-			<Context>
-				<Routes />
-			</Context>
-		</SafeAreaProvider>
-	);
+		return (
+			<SafeAreaProvider>
+				<Context>
+					<Routes initialRoute={initialRoute} />
+				</Context>
+			</SafeAreaProvider>
+		);
+	}
 }

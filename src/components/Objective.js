@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { View, Text } from "react-native";
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { InputText } from "../../constants/styledComponents";
+import { InputObjective } from "../../constants/styledComponents";
 import { authentication, db } from "../../firebase";
 import { Context } from '../context/ContextComponent';
 import styled from 'styled-components/native';
@@ -57,7 +57,7 @@ const Objective = ({isDone, id, n, text, date}) => {
 				}}
 			/>
 
-			<InputText
+			<InputObjective
 				autoFocus={true}
 				value={text}
 				onChangeText={(text) =>

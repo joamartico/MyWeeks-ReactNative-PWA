@@ -10,6 +10,7 @@ import { BlurView } from "expo-blur";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../constants/theme";
 import Profile from '../screens/Profile';
+import Plan from '../screens/Plan';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ const BottomTabs = () => {
 			/>
 			<Tab.Screen
 				name="Plan"
-				component={Week}
+				component={Plan}
 				options={{
 					tabBarIcon: ({ color }) => (
 						<Fontisto name="map" size={24} color={color} />

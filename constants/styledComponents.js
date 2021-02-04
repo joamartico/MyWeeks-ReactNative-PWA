@@ -9,21 +9,19 @@ export const ScrollBody = styled.ScrollView`
 	padding-left: 10px;
 	padding-right: 10px;
 	aspect-ratio: 1;
-	padding-top: ${({insetTop}) =>  insetTop};
-	padding-bottom: ${({insetBottom}) =>  insetBottom};
-
+	padding-top: ${({ insetTop }) => insetTop};
+	padding-bottom: ${({ insetBottom }) => insetBottom};
 `;
 
 export const Body = styled.SafeAreaView`
-
 	height: 100vh;
 	width: 100vw;
 	background: ${COLORS.bg};
 	padding-left: 10px;
 	padding-right: 10px;
 	aspect-ratio: 1;
-	/* padding-top: ${({insetTop}) =>  20 + insetTop};
-	padding-bottom: ${({insetBottom}) => 20 + insetBottom}; */
+	/* padding-top: ${({ insetTop }) => 20 + insetTop};
+	padding-bottom: ${({ insetBottom }) => 20 + insetBottom}; */
 	padding-top: 20px;
 	padding-bottom: 20px;
 `;
@@ -46,12 +44,13 @@ export const FullCard = styled.View`
 	margin-top: 20px; */
 	padding-top: 25px;
 	padding-bottom: 25px;
-	height: ${({insetTop, insetBottom}) => Dimensions.get("window").height - 20 - 20 - insetTop };
+	height: ${({ insetTop, insetBottom }) =>
+		Dimensions.get("window").height - 20 - 20 - insetTop};
 	box-shadow: 0 7px 5px ${() => "#0004"};
 	flex-direction: column;
 	justify-content: space-around;
-	margin-top: ${({insetTop}) =>  insetTop && insetTop};
-	margin-bottom: ${({insetBottom}) =>  insetBottom && insetBottom};
+	margin-top: ${({ insetTop }) => insetTop && insetTop};
+	margin-bottom: ${({ insetBottom }) => insetBottom && insetBottom};
 `;
 
 export const Title = styled.Text`
@@ -85,7 +84,25 @@ export const ButtonTitle = styled.Text`
 	color: white;
 `;
 
-export const InputText = styled.TextInput`
+export const InputNotes = styled.TextInput`
 	width: 100%;
 	font-size: 15px;
+`;
+
+export const InputObjective = styled.TextInput`
+	width: 95%;
+	font-size: 15px;
+	margin-left: auto;
+
+`;
+
+export const InputText = styled.TextInput`
+	font-size: 18px;
+	/* padding-left: 10px; */
+	margin-top: 20px;
+	width: 100%;
+	height: 50px;
+	/* border-radius: 6px; */
+	border-bottom-width: 1px;
+	border-color: ${COLORS.primary};
 `;

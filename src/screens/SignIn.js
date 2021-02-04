@@ -7,6 +7,7 @@ import {
 	Body,
 	StyledButton,
 	ButtonTitle,
+	InputText,
 	Title,
 	Card,
 	FullCard,
@@ -37,6 +38,7 @@ const SignIn = ({navigation}) => {
 
 	const uiConfig = {
 		signInFlow: "popup",
+
 		signInOptions: [
 			firebase.auth.GoogleAuthProvider.PROVIDER_ID,
 			firebase.auth.FacebookAuthProvider.PROVIDER_ID,
@@ -53,16 +55,16 @@ const SignIn = ({navigation}) => {
 			<Body>
 				{/* <Title style={{marginTop: 30, fontSize: 30,  }}>Welcome to MyWeeks!</Title> */}
 				<FullCard insetTop={insets.top} insetBottom={insets.bottom}>
-					<Title style={{ fontSize: 40 }}>
+					<Title style={{ fontSize: "5vh", marginTop: "7%" }}>
 						Welcome to {""} MyWeeks!
 					</Title>
 					<View>
-						<Input
+						<InputText
 							placeholder="Email"
 							value={email}
 							onChangeText={(val) => setEmail(val)}
 						/>
-						<Input
+						<InputText
 							placeholder="Password"
 							value={password}
 							onChangeText={(val) => setPassword(val)}
@@ -105,8 +107,8 @@ const SignIn = ({navigation}) => {
 						<Text
 							style={{
 								color: "gray",
-								marginTop: 45,
-								marginBottom: 20,
+								marginTop: "8%",
+								marginBottom: "2%",
 								fontSize: 20,
 								textAlign: "center",
 							}}
@@ -117,7 +119,8 @@ const SignIn = ({navigation}) => {
 							<StyledFirebaseAuth
 								uiConfig={uiConfig}
 								firebaseAuth={authentication}
-								uiCallback={() => <Text>hola</Text>}
+								style={{width: "100%!"}}
+								
 							/>
 
 							{/* <SocialButton style={{ borderColor: "#eb060a" }}>
@@ -162,13 +165,4 @@ const Row = styled.View`
 	margin-bottom: 25px;
 `;
 
-const Input = styled.TextInput`
-	font-size: 20px;
-	padding-left: 10px;
-	margin-top: 20px;
-	width: 100%;
-	height: 50px;
-	/* border-radius: 6px; */
-	border-bottom-width: 1px;
-	border-color: ${COLORS.primary};
-`;
+

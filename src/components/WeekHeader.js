@@ -33,7 +33,7 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious }) => {
 
 	const toDayNumber = date.add({ days: 6 }).day;
 	const toDayMonthNumber = date.add({ days: 6 }).month;
-	const toDayMonth = toDayNumber < 7 && months[toDayMonthNumber];
+	const toDayMonth = toDayNumber < 7 && months[toDayMonthNumber - 1];
 
 	return (
 		// <BlurView intensity={90} tint="light" style={[{height: 70 + insets.top, paddingTop: insets.top}, styles.header]} >

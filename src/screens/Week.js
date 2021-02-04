@@ -1,23 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Pressable } from "react-native";
+import { Pressable, Text } from "react-native";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS } from "../../constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import WeekHeader from "../components/WeekHeader";
 import {
-	InputText,
+	InputNotes,
 	Subtitle,
 	Card,
 	ScrollBody,
 } from "../../constants/styledComponents";
 import { Temporal } from "proposal-temporal";
 import { authentication, db } from "../../firebase";
-import { Context } from '../context/ContextComponent';
-import Objective from '../components/Objective';
-
-
-
+import { Context } from "../context/ContextComponent";
+import Objective from "../components/Objective";
 
 const days = [
 	"Monday",
@@ -29,25 +26,18 @@ const days = [
 	"Sunday",
 ];
 
-
 function getWeekDate() {
 	const nowDate = Temporal.PlainDate.from(Temporal.now.zonedDateTimeISO());
-	const daysAfterMonday = 7 - nowDate.dayOfWeek;
+	const daysAfterMonday = nowDate.dayOfWeek - 1;
 	const weekDate = nowDate.add({ days: -daysAfterMonday });
 	return weekDate;
 }
 
-
-
-
 const Week = ({ navigation, route }) => {
 	const insets = useSafeAreaInsets();
-
-	const {objectives, setObjectives} = useContext(Context)
-
+	const { objectives, setObjectives } = useContext(Context);
 	const [date, setDate] = useState(getWeekDate());
 	const [notes, setNotes] = useState("");
-
 
 	const weekRef =
 		authentication.currentUser &&
@@ -70,24 +60,19 @@ const Week = ({ navigation, route }) => {
 			.orderBy("order", "asc")
 			.get()
 			.then((snapshot) => {
-				
-				
 				setObjectives(
 					snapshot.docs
-					.filter(doc => doc.data().text != "")
-					.map((doc, index) => {
-						var newDoc = doc.data();
-						newDoc.id = doc.id;
-						newDoc.n = index
-						return newDoc;
-						
-					})
+						.filter((doc) => doc.data().text != "")
+						.map((doc, index) => {
+							var newDoc = doc.data();
+							newDoc.id = doc.id;
+							newDoc.n = index;
+							return newDoc;
+						})
 				);
 			});
 	}, [date]);
 
-
-	
 	const onChangeDate = (symbol) => {
 		if (symbol === "+") {
 			const newDate = date.add({ days: 7 });
@@ -102,7 +87,12 @@ const Week = ({ navigation, route }) => {
 	const onAddObjective = (type) => {
 		weekRef
 			.collection("objectives")
-			.add({ text: "", done: false, type, order: objectives.length})
+			.add({
+				text: "",
+				done: false,
+				type,
+				order: objectives.length,
+			})
 			.then((res) => {
 				setObjectives([
 					...objectives,
@@ -117,20 +107,24 @@ const Week = ({ navigation, route }) => {
 			});
 	};
 
-	
-
 	function dayDate(daysAfterMonday) {
 		const day = date.add({ days: daysAfterMonday }).day;
 		const month = date.add({ days: daysAfterMonday }).month;
 		return `${day}/${month}`;
 	}
 
-	
 	return (
 		<>
-			<WeekHeader onPressNext={() => onChangeDate("+")} onPressPrevious={() => onChangeDate("-")} date={date}/>
+			<WeekHeader
+				onPressNext={() => onChangeDate("+")}
+				onPressPrevious={() => onChangeDate("-")}
+				date={date}
+			/>
 
-			<ScrollBody insetTop={70 + insets.top} insetBottom={70 + insets.bottom}>
+			<ScrollBody
+				insetTop={70 + insets.top}
+				insetBottom={70 + insets.bottom}
+			>
 				<Card>
 					<Subtitle>Objectives</Subtitle>
 
@@ -140,7 +134,13 @@ const Week = ({ navigation, route }) => {
 							return a.n - b.n;
 						})
 						.map((objective) => (
-							<Objective n={objective.n} text={objective.text} id={objective.id} isDone={objective.done}  date={date}/>
+							<Objective
+								n={objective.n}
+								text={objective.text}
+								id={objective.id}
+								isDone={objective.done}
+								date={date}
+							/>
 						))}
 
 					<AddButton onPress={() => onAddObjective("week")}>
@@ -149,7 +149,7 @@ const Week = ({ navigation, route }) => {
 
 					<Subtitle>Notes</Subtitle>
 
-					<InputText
+					<InputNotes
 						value={notes}
 						onChangeText={(text) => {
 							setNotes(text);
@@ -170,10 +170,14 @@ const Week = ({ navigation, route }) => {
 						{objectives
 							?.filter((objective) => objective.type === day)
 							.map((objective) => (
-								<Objective n={objective.n} text={objective.text} id={objective.id} isDone={objective.done}  date={date}/>
-
-								
-						))}
+								<Objective
+									n={objective.n}
+									text={objective.text}
+									id={objective.id}
+									isDone={objective.done}
+									date={date}
+								/>
+							))}
 
 						<AddButton onPress={() => onAddObjective(day)}>
 							<MaterialCommunityIcons name="plus" size={25} />
@@ -183,11 +187,9 @@ const Week = ({ navigation, route }) => {
 			</ScrollBody>
 		</>
 	);
-}
+};
 
-
-
-
+export default Week;
 
 const AddButton = styled.TouchableOpacity`
 	background-color: ${COLORS.secondary};
@@ -200,7 +202,3 @@ const AddButton = styled.TouchableOpacity`
 	justify-content: center;
 	align-items: center;
 `;
-
-
-
-export default Week;

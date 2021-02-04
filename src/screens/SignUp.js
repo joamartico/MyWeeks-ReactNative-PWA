@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { authentication, db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
 	Body,
 	StyledButton,
 	ButtonTitle,
 	Title,
 	FullCard,
+	InputText,
+	Subtitle,
 } from "../../constants/styledComponents";
+import { View } from "react-native";
 
 const SignUp = () => {
 	const navigation = useNavigation();
-
+	const insets = useSafeAreaInsets();
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -38,23 +42,41 @@ const SignUp = () => {
 	return (
 		<Body>
 			<FullCard insetTop={insets.top} insetBottom={insets.bottom}>
-				<Title>Create your account</Title>
-				<Input
-					placeholder="name"
-					value={name}
-					onChangeText={(val) => setName(val)}
-				/>
-				<Input
-					placeholder="email"
-					value={email}
-					onChangeText={(val) => setEmail(val)}
-				/>
-				<Input
-					placeholder="password"
-					value={password}
-					onChangeText={(val) => setPassword(val)}
-					secureTextEntry={true}
-				/>
+				<Title style={{ fontSize: "5vh" }}>Create your account</Title>
+
+				<View>
+					<Subtitle>User Name</Subtitle>
+					<InputText
+						style={{marginTop: 0}}
+						placeholder="Enter your name"
+						value={name}
+						onChangeText={(val) => setName(val)}
+					/>
+				</View>
+
+				<View>
+					<Subtitle>Email</Subtitle>
+					<InputText
+						style={{marginTop: 0}}
+
+						placeholder="Enter your email"
+						value={email}
+						onChangeText={(val) => setEmail(val)}
+					/>
+				</View>
+
+				<View>
+					<Subtitle>Password</Subtitle>
+					<InputText
+						style={{marginTop: 0}}
+
+						placeholder="Enter your password"
+						value={password}
+						onChangeText={(val) => setPassword(val)}
+						secureTextEntry={true}
+					/>
+				</View>
+
 				<StyledButton onPress={() => onSignUp()}>
 					<ButtonTitle>Sign Up</ButtonTitle>
 				</StyledButton>
