@@ -12,8 +12,8 @@ export default function App() {
 	useEffect(() => {
 		authentication.onAuthStateChanged((res) => {
 			res == null
-				? setInitialRoute("SignIn")
-				: setInitialRoute("BottomTabs");
+				? setInitialRoute("Onboarding")
+				: setInitialRoute("Weeks");
 		});
 	}, []);
 

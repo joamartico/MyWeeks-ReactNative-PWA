@@ -22,6 +22,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-firebaseui": "^4.1.0",
+    "react-ios-pwa-prompt": "^1.8.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-bouncy-checkbox": "^1.0.8",
     "react-native-gesture-handler": "~1.8.0",
@@ -32,7 +33,8 @@
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.3",
     "react-navigation-tabs": "^2.10.1",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "workbox-webpack-plugin": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

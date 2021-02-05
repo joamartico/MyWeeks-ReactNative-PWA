@@ -38,6 +38,7 @@ export const Card = styled.View`
 export const FullCard = styled.View`
 	background-color: #fff;
 	width: 100%;
+	/* height: 100%; */
 	padding: 15px;
 	border-radius: 15px;
 	/* margin-bottom: 20px;
@@ -74,6 +75,8 @@ export const StyledButton = styled.TouchableOpacity`
 	width: 100%;
 	height: 55;
 	border-radius: 10;
+	border-width: 1;
+	border-color: ${COLORS.primary};
 	background-color: ${COLORS.primary};
 	border-color: ${COLORS.primary};
 `;

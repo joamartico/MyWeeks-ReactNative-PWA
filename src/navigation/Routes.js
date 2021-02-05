@@ -3,9 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabs from "./BottomTabs";
 import SignUp from "../screens/SignUp";
-import SignIn from "../screens/SignIn";
-import { Context } from '../context/ContextComponent';
-import { authentication } from "../../firebase";
+import SignIn from "../screens/SignIn"
+import Onboarding from '../screens/Onboarding';
 
 
 const Stack = createStackNavigator();
@@ -49,6 +48,7 @@ const Routes = ({initialRoute}) => {
 						screens: {
 							SignIn: "/signin",
 							SignUp: "/signup",
+							Onboarding: "/onboarding",
 							BottomTabs: {
 								// path: "bottomtabs",
 								screens: {
@@ -86,6 +86,13 @@ const Routes = ({initialRoute}) => {
 					<Stack.Screen
 						name="SignUp"
 						component={SignUp}
+						options={{
+							headerShown: false,
+						}}
+					/>
+					<Stack.Screen
+						name="Onboarding"
+						component={Onboarding}
 						options={{
 							headerShown: false,
 						}}

@@ -56,7 +56,7 @@ const SignIn = ({navigation}) => {
 				{/* <Title style={{marginTop: 30, fontSize: 30,  }}>Welcome to MyWeeks!</Title> */}
 				<FullCard insetTop={insets.top} insetBottom={insets.bottom}>
 					<Title style={{ fontSize: "5vh", marginTop: "7%" }}>
-						Welcome to {""} MyWeeks!
+						Login to your Account
 					</Title>
 					<View>
 						<InputText
