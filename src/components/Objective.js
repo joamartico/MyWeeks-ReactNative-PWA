@@ -1,19 +1,16 @@
-import React, { useContext } from "react";
-import { View, Text } from "react-native";
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import React, { useContext, useRef, useEffect } from "react";
+import { View, Text, ScrollView } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { InputObjective } from "../../constants/styledComponents";
 import { authentication, db } from "../../firebase";
-import { Context } from '../context/ContextComponent';
-import styled from 'styled-components/native';
+import { Context } from "../context/ContextComponent";
+import styled from "styled-components/native";
 import { COLORS } from "../../constants/theme";
 
+const Objective = ({ isDone, id, n, text, date }) => {
+	const { objectives, setObjectives } = useContext(Context);
 
-const Objective = ({isDone, id, n, text, date}) => {
-
-    const {objectives, setObjectives} = useContext(Context)
-
-
-    const weekRef =
+	const weekRef =
 		authentication.currentUser &&
 		db
 			.collection("users")
@@ -21,10 +18,9 @@ const Objective = ({isDone, id, n, text, date}) => {
 			.collection("weeks")
 			.doc(date.toString());
 
+	const onChangeObjective = (text, id, n) => {
+		console.log(n, text);
 
-    const onChangeObjective = (text, id, n) => {
-        console.log(n, text);
-        
 		objectives.sort((a, b) => a.n - b.n);
 		const newObjectives = objectives.slice();
 		newObjectives[n].text = text;
@@ -40,14 +36,19 @@ const Objective = ({isDone, id, n, text, date}) => {
 		weekRef.collection("objectives").doc(id).update({ done: !isChecked });
 	};
 
+	 const inputRef = useRef(null)
+
+	// useEffect(() => {
+	// 	inputRef.current.focus()
+	// 	inputRef.current.autofocus = true
+	// 	console.log(inputRef);
+	// }, [])
 
 	return (
 		<ObjectiveBody>
 			<BouncyCheckbox
 				text=""
-				onPress={() =>
-					onChangeCheckBox(isDone, id, n)
-				}
+				onPress={() => onChangeCheckBox(isDone, id, n)}
 				isChecked={isDone}
 				borderColor={COLORS.secondary}
 				fillColor={COLORS.secondary}
@@ -56,14 +57,18 @@ const Objective = ({isDone, id, n, text, date}) => {
 					marginLeft: 0,
 				}}
 			/>
+			<ScrollView horizontal={true} style={{width:"90vw", height: 25}} showsHorizontalScrollIndicator={false}>
 
 			<InputObjective
-				autoFocus={true}
+				placeholder="Type here..."
 				value={text}
-				onChangeText={(text) =>
-					onChangeObjective(text, id, n)
-				}
+				onChangeText={(text) => onChangeObjective(text, id, n)}
+				// autoFocus={true} // POR QUE NO FUNCIONA
+				// ref={inputRef}
+				focus={true}
 			/>
+			</ScrollView>
+
 		</ObjectiveBody>
 	);
 };
@@ -78,4 +83,3 @@ const ObjectiveBody = styled.View`
 	border-bottom-width: 1px;
 	border-bottom-color: lightgray;
 `;
-

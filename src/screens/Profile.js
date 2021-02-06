@@ -17,7 +17,7 @@ const Profile = ({navigation}) => {
 	const { displayName, email } = authentication.currentUser;
 	return (
 		<Body>
-			<FullCard insetTop={insets.top} insetBottom={insets.bottom + 60}>
+			<FullCard insetTop={insets.top} insetBottom={insets.bottom + 50}>
 				<Title>{displayName}</Title>
 				<Subtitle>{email}</Subtitle>
 				<StyledButton

@@ -24,8 +24,7 @@ const months = [
 ];
 
 
-const WeekHeader = ({ date, onPressNext, onPressPrevious }) => {
-	const insets = useSafeAreaInsets()
+const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
 	
 	const fromDayNumber = date.day;
 	const fromDayMonthNumber = date.month;
@@ -33,7 +32,7 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious }) => {
 
 	const toDayNumber = date.add({ days: 6 }).day;
 	const toDayMonthNumber = date.add({ days: 6 }).month;
-	const toDayMonth = toDayNumber < 7 && months[toDayMonthNumber - 1];
+	const toDayMonth =  months[toDayMonthNumber - 1];
 
 	return (
 		// <BlurView intensity={90} tint="light" style={[{height: 70 + insets.top, paddingTop: insets.top}, styles.header]} >
@@ -57,7 +56,7 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious }) => {
 
 
 
-		<Header style={{ height: 70 + insets.top, paddingTop: insets.top }}>
+		<Header style={{ height: 70 + insetTop, paddingTop: insetTop }}>
 				<Pressable onPress={onPressPrevious}>
 					<MaterialCommunityIcons
 						name="chevron-left"
@@ -67,9 +66,14 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious }) => {
 				</Pressable>
 
 				<Title>
-					{fromDayMonth} {fromDayNumber} -
-					{toDayNumber < 7 && `${toDayMonth} ${""}`}
-					{toDayNumber}
+					
+						
+					{time == "week" &&`${fromDayMonth} ${fromDayNumber} - ${toDayNumber < 7 ? `${toDayMonth} ` : ""}${toDayNumber}`}
+					{time == "Month" && fromDayMonth}
+					{time == "Year" && date.year}
+					{time == "Five Years" && `${date.year} - ${date.add({years: 5}).year}`}
+					{time == "Ten Years" && `${date.year} - ${date.add({years: 10}).year}`}
+				
 				</Title>
 
 				<Pressable onPress={onPressNext}>

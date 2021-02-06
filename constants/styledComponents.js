@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import { COLORS } from "./theme";
 
 export const ScrollBody = styled.ScrollView`
-	height: 100vh;
+	height: ${Dimensions.get("window").height};
 	width: 100vw;
 	background: ${COLORS.bg};
 	padding-left: 10px;
@@ -24,6 +24,8 @@ export const Body = styled.SafeAreaView`
 	padding-bottom: ${({ insetBottom }) => 20 + insetBottom}; */
 	padding-top: 20px;
 	padding-bottom: 20px;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const Card = styled.View`
@@ -46,7 +48,7 @@ export const FullCard = styled.View`
 	padding-top: 25px;
 	padding-bottom: 25px;
 	height: ${({ insetTop, insetBottom }) =>
-		Dimensions.get("window").height - 20 - 20 - insetTop};
+		Dimensions.get("window").height - 20 - 20 - insetTop- insetBottom};
 	box-shadow: 0 7px 5px ${() => "#0004"};
 	flex-direction: column;
 	justify-content: space-around;
@@ -93,10 +95,21 @@ export const InputNotes = styled.TextInput`
 `;
 
 export const InputObjective = styled.TextInput`
-	width: 95%;
+	width: 100vw;
 	font-size: 15px;
 	margin-left: auto;
+`;
 
+export const AddButton = styled.TouchableOpacity`
+	background-color: ${COLORS.secondary};
+	height: 35;
+	width: 35;
+	margin-top: 15px;
+	margin-bottom: 20px;
+	align-self: center;
+	border-radius: 10;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const InputText = styled.TextInput`

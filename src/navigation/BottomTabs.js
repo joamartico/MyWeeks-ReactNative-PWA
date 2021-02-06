@@ -11,6 +11,7 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "../../constants/theme";
 import Profile from '../screens/Profile';
 import Plan from '../screens/Plan';
+import PlanTopTabs from './PlanTopTabs';
 
 const Tab = createBottomTabNavigator();
 

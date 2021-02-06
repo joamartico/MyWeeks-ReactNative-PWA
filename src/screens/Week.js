@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Pressable, Text } from "react-native";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -10,6 +10,7 @@ import {
 	Subtitle,
 	Card,
 	ScrollBody,
+	AddButton,
 } from "../../constants/styledComponents";
 import { Temporal } from "proposal-temporal";
 import { authentication, db } from "../../firebase";
@@ -27,6 +28,8 @@ const days = [
 ];
 
 function getWeekDate() {
+	const insets = useSafeAreaInsets()
+
 	const nowDate = Temporal.PlainDate.from(Temporal.now.zonedDateTimeISO());
 	const daysAfterMonday = nowDate.dayOfWeek - 1;
 	const weekDate = nowDate.add({ days: -daysAfterMonday });
@@ -119,9 +122,12 @@ const Week = ({ navigation, route }) => {
 				onPressNext={() => onChangeDate("+")}
 				onPressPrevious={() => onChangeDate("-")}
 				date={date}
+				time="week"
+				insetTop={insets.top}
 			/>
 
 			<ScrollBody
+				showsVerticalScrollIndicator={false}
 				insetTop={70 + insets.top}
 				insetBottom={70 + insets.bottom}
 			>
@@ -135,6 +141,7 @@ const Week = ({ navigation, route }) => {
 						})
 						.map((objective) => (
 							<Objective
+								key={objective.id}
 								n={objective.n}
 								text={objective.text}
 								id={objective.id}
@@ -162,7 +169,7 @@ const Week = ({ navigation, route }) => {
 				</Card>
 
 				{days.map((day, index) => (
-					<Card>
+					<Card key={index}>
 						<Subtitle>
 							{day} {dayDate(index)}
 						</Subtitle>
@@ -171,6 +178,7 @@ const Week = ({ navigation, route }) => {
 							?.filter((objective) => objective.type === day)
 							.map((objective) => (
 								<Objective
+									key={objective.id}
 									n={objective.n}
 									text={objective.text}
 									id={objective.id}
@@ -191,14 +199,4 @@ const Week = ({ navigation, route }) => {
 
 export default Week;
 
-const AddButton = styled.TouchableOpacity`
-	background-color: ${COLORS.secondary};
-	height: 35;
-	width: 35;
-	margin-top: 15px;
-	margin-bottom: 20px;
-	align-self: center;
-	border-radius: 10;
-	justify-content: center;
-	align-items: center;
-`;
+
