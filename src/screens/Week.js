@@ -38,7 +38,7 @@ function getWeekDate() {
 
 const Week = ({ navigation, route }) => {
 	const insets = useSafeAreaInsets();
-	const { objectives, setObjectives } = useContext(Context);
+	const { objectives, setObjectives, actualRoute, setActualRoute } = useContext(Context);
 	const [date, setDate] = useState(getWeekDate());
 	const [notes, setNotes] = useState("");
 
@@ -74,7 +74,8 @@ const Week = ({ navigation, route }) => {
 						})
 				);
 			});
-	}, [date]);
+		setActualRoute(route.name)
+	}, [date, actualRoute]);
 
 	const onChangeDate = (symbol) => {
 		if (symbol === "+") {
@@ -122,7 +123,7 @@ const Week = ({ navigation, route }) => {
 				onPressNext={() => onChangeDate("+")}
 				onPressPrevious={() => onChangeDate("-")}
 				date={date}
-				time="week"
+				time="weeks"
 				insetTop={insets.top}
 			/>
 
@@ -147,6 +148,7 @@ const Week = ({ navigation, route }) => {
 								id={objective.id}
 								isDone={objective.done}
 								date={date}
+								time="weeks"
 							/>
 						))}
 
@@ -184,6 +186,7 @@ const Week = ({ navigation, route }) => {
 									id={objective.id}
 									isDone={objective.done}
 									date={date}
+									time="weeks"
 								/>
 							))}
 

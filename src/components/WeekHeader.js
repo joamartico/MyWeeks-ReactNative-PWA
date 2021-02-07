@@ -68,9 +68,9 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
 				<Title>
 					
 						
-					{time == "week" &&`${fromDayMonth} ${fromDayNumber} - ${toDayNumber < 7 ? `${toDayMonth} ` : ""}${toDayNumber}`}
-					{time == "Month" && fromDayMonth}
-					{time == "Year" && date.year}
+					{time == "weeks" &&`${fromDayMonth} ${fromDayNumber} - ${toDayNumber < 7 ? `${toDayMonth} ` : ""}${toDayNumber}`}
+					{time == "Months" && fromDayMonth}
+					{time == "Years" && date.year}
 					{time == "Five Years" && `${date.year} - ${date.add({years: 5}).year}`}
 					{time == "Ten Years" && `${date.year} - ${date.add({years: 10}).year}`}
 				

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
 	createBottomTabNavigator,
 	BottomTabBar,
@@ -9,19 +9,23 @@ import { MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../constants/theme";
-import Profile from '../screens/Profile';
-import Plan from '../screens/Plan';
-import PlanTopTabs from './PlanTopTabs';
+import Profile from "../screens/Profile";
+import Plan from "../screens/Plan";
+import PlanTopTabs from "./PlanTopTabs";
+import { Context } from "../context/ContextComponent";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabs = () => {
+	const { setActualRoute } = useContext(Context);
 	return (
 		<Tab.Navigator
 			backBehavior="none"
-			tabBarOptions={{
-				// activeTintColor: COLORS.primary,
-			}}
+			tabBarOptions={
+				{
+					// activeTintColor: COLORS.primary,
+				}
+			}
 			tabBar={(props) => (
 				<BlurView tint="light" intensity={90} style={styles.blurView}>
 					<BottomTabBar {...props} style={styles.bottomTabBar} />
@@ -40,6 +44,16 @@ const BottomTabs = () => {
 						/>
 					),
 				}}
+				listeners={({ navigation, route }) => ({
+					tabPress: (event) => {
+						event.preventDefault();
+						console.log(route.name);
+						setActualRoute(route.name);
+						navigation.replace("BottomTabs", {
+							screen: route.name,
+						});
+					},
+				})}
 			/>
 			<Tab.Screen
 				name="Plan"
@@ -49,13 +63,27 @@ const BottomTabs = () => {
 						<Fontisto name="map" size={24} color={color} />
 					),
 				}}
+				listeners={({ navigation, route }) => ({
+					tabPress: (event) => {
+						event.preventDefault();
+						console.log(route.name);
+						setActualRoute(route.name);
+						navigation.replace("BottomTabs", {
+							screen: route.name,
+						});
+					},
+				})}
 			/>
 			<Tab.Screen
 				name="Profile"
 				component={Profile}
 				options={{
 					tabBarIcon: ({ color }) => (
-						<MaterialCommunityIcons name="account" size={24} color={color} />
+						<MaterialCommunityIcons
+							name="account"
+							size={24}
+							color={color}
+						/>
 					),
 				}}
 			/>

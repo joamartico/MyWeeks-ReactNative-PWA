@@ -1,48 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import {
 	Card,
 	InputNotes,
 	ScrollBody,
+	AddButton,
 	Subtitle,
 } from "../../constants/styledComponents";
 import WeekHeader from "../components/WeekHeader";
 import { Temporal } from "proposal-temporal";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { authentication, db } from "../../firebase";
+import { Context } from "../context/ContextComponent";
+import Objective from "../components/Objective";
+
+const segmentValues = ["Months", "Years", "Five Years", "Ten Years"];
 
 const getDate = () => {
 	return Temporal.PlainDate.from(Temporal.now.zonedDateTimeISO());
 };
 
-const months = [
-	"January",
-	"February",
-	"March",
-	"Arpil",
-	"May",
-	"june",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November",
-	"December",
-];
-
-const segmentValues = ["Month", "Year", "Five Years", "Ten Years"];
-
-const Plan = ({ route }) => {
-	const [selectedIndex, setSelectedIndex] = useState(0);
+const Plan = ({ route, navigation }) => {
 	const insets = useSafeAreaInsets();
-	const [date, setDate] = useState(getDate());
 
-	const selectedSegment = segmentValues[selectedIndex];
+	const { objectives, setObjectives, actualRoute,  } = useContext(Context);
+
+	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [selectedSegment, setSelectedSegment] = useState("Months");
+	const [date, setDate] = useState(getDate());
+	const [notes, setNotes] = useState("");
 
 	const changeTime = (selectedSegmentt, symbol) => {
 		switch (selectedSegmentt) {
-			case "Month":
+			case "Months":
 				if (symbol === "+") {
 					const newDate = date.add({ months: 1 });
 					setDate(newDate);
@@ -50,10 +42,9 @@ const Plan = ({ route }) => {
 				if (symbol === "-") {
 					const newDate = date.add({ months: -1 });
 					setDate(newDate);
-					console.log(date);
 				}
 				break;
-			case "Year":
+			case "Years":
 				if (symbol === "+") {
 					const newDate = date.add({ years: 1 });
 					setDate(newDate);
@@ -86,6 +77,82 @@ const Plan = ({ route }) => {
 		}
 	};
 
+	function getDocName(selectedSegmentt) {
+		if (selectedSegmentt == "Months") return `${date.year}-${date.month}`;
+		if (selectedSegmentt == "Years") return date.year.toString();
+		if (selectedSegmentt == "Five Years")
+			return `${date.year}-${date.year + 5}`;
+		if (selectedSegmentt == "Ten Years")
+			return `${date.year}-${date.year + 10}`;
+	}
+
+	const timeRef =
+		selectedSegment && authentication.currentUser && 
+		db
+			.collection("users")
+			.doc(authentication.currentUser.uid)
+			.collection(selectedSegment)
+			.doc(getDocName(selectedSegment));
+
+	useEffect(() => {
+		timeRef
+			?.get()
+			.then((doc) => {
+				doc.data() ? setNotes(doc.data().notes) : setNotes("");
+			})
+			.catch((err) => console.log(err));
+
+		timeRef
+			?.collection("objectives")
+			.orderBy("order", "asc")
+			.get()
+			.then((snapshot) => {
+				setObjectives(
+					snapshot.docs
+						.filter((doc) => doc.data().text != "")
+						.map((doc, index) => {
+							var newDoc = doc.data();
+							newDoc.id = doc.id;
+							newDoc.n = index;
+							return newDoc;
+						})
+				);
+			});
+		
+	}, [date, selectedSegment, actualRoute]);
+
+	useEffect(() => {
+		setDate(getDate())
+	}, [selectedSegment])
+
+	const onAddObjective = () => {
+		timeRef
+			.collection("objectives")
+			.add({
+				text: "",
+				done: false,
+
+				order: objectives.length,
+			})
+			.then((res) => {
+				setObjectives([
+					...objectives,
+					{
+						text: "",
+						done: false,
+
+						n: objectives.length,
+						id: res.id,
+					},
+				]);
+			});
+	};
+
+	useEffect(() => {
+		console.log("CAMBIO LA RUTA");
+	}, [actualRoute])
+
+
 
 	return (
 		<>
@@ -102,6 +169,11 @@ const Plan = ({ route }) => {
 					values={segmentValues}
 					selectedIndex={selectedIndex}
 					onChange={(event) => {
+						setSelectedSegment(
+							segmentValues[
+								event.nativeEvent.selectedSegmentIndex
+							]
+						);
 						setSelectedIndex(
 							event.nativeEvent.selectedSegmentIndex
 						);
@@ -120,11 +192,12 @@ const Plan = ({ route }) => {
 				<Card
 					insetTop={85 + insets.top}
 					insetBottom={100 + insets.bottom}
+					style={{ marginTop: 85 + insets.top }}
 				>
 					<Subtitle>Objectives</Subtitle>
 
 					{objectives
-						?.filter((objective) => objective.type === "week")
+
 						.sort((a, b) => {
 							return a.n - b.n;
 						})
@@ -136,10 +209,11 @@ const Plan = ({ route }) => {
 								id={objective.id}
 								isDone={objective.done}
 								date={date}
+								time={selectedSegment}
 							/>
 						))}
 
-					<AddButton onPress={() => onAddObjective("week")}>
+					<AddButton onPress={() => onAddObjective()}>
 						<MaterialCommunityIcons name="plus" size={25} />
 					</AddButton>
 
@@ -149,7 +223,7 @@ const Plan = ({ route }) => {
 						value={notes}
 						onChangeText={(text) => {
 							setNotes(text);
-							weekRef.set({ notes: text });
+							timeRef.set({ notes: text });
 						}}
 						multiline={true}
 						numberOfLines={20}

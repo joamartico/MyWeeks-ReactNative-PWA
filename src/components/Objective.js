@@ -7,25 +7,34 @@ import { Context } from "../context/ContextComponent";
 import styled from "styled-components/native";
 import { COLORS } from "../../constants/theme";
 
-const Objective = ({ isDone, id, n, text, date }) => {
+const Objective = ({ isDone, id, n, text, date, time }) => {
 	const { objectives, setObjectives } = useContext(Context);
 
-	const weekRef =
+
+	function getDocName() {
+		if (time == "weeks") return date.toString()
+		if (time == "Months") return `${date.year}-${date.month}`;
+		if (time == "Years") return date.year.toString();
+		if (time == "Five Years") return `${date.year}-${date.year + 5}`
+		if (time == "Ten Years") return `${date.year}-${date.year + 10}`
+	}
+
+	const timeRef =
 		authentication.currentUser &&
 		db
 			.collection("users")
 			.doc(authentication.currentUser.uid)
-			.collection("weeks")
-			.doc(date.toString());
+			.collection(time)
+			.doc(getDocName());
 
 	const onChangeObjective = (text, id, n) => {
-		console.log(n, text);
+		console.log(text, id, n);
 
 		objectives.sort((a, b) => a.n - b.n);
 		const newObjectives = objectives.slice();
 		newObjectives[n].text = text;
 		setObjectives(newObjectives);
-		weekRef.collection("objectives").doc(id).update({ text: text });
+		timeRef.collection("objectives").doc(id).update({ text: text });
 	};
 
 	const onChangeCheckBox = (isChecked, id, n) => {
@@ -33,7 +42,7 @@ const Objective = ({ isDone, id, n, text, date }) => {
 		const newObjectives = objectives.slice();
 		newObjectives[n].done = !isChecked;
 		setObjectives(newObjectives);
-		weekRef.collection("objectives").doc(id).update({ done: !isChecked });
+		timeRef.collection("objectives").doc(id).update({ done: !isChecked });
 	};
 
 	 const inputRef = useRef(null)
