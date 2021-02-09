@@ -35,15 +35,15 @@ const Onboarding = ({ navigation }) => {
 	}
 
 	return (
-		<Body>
-			<FullCard insetTop={insets.top}>
+		<Body insetTop={insets.top} insetBottom={insets.bottom}>
+			<FullCard>
 				{/* <FullCard insetTop={insets.top} insetBottom={insets.bottom}> */}
 				<View style={{ height: "60%", marginTop: "40%" }}>
 					<Title style={{ fontSize: "7vh" }}>
 						Welcome to {""} MyWeeks!
 					</Title>
 
-					<Subtitle style={{ fontSize: "3.5vh", marginTop: "10%" }}>
+					<Subtitle style={{ fontSize: "3vh", marginTop: "10%" }}>
 						Your weekly schedule to manage your time and achive your
 						goals
 					</Subtitle>
@@ -63,8 +63,8 @@ const Onboarding = ({ navigation }) => {
 					</StyledButton>
 				)}
 				<StyledButton
-					style={{ marginTop: "auto" }}
-					onPress={() => navigation.replace("SignIn")}
+					style={{ marginTop: "10" }}
+					onPress={() => navigation.navigate("SignIn")}
 				>
 					<ButtonTitle>Get Started!</ButtonTitle>
 				</StyledButton>

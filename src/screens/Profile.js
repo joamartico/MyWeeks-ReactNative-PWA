@@ -16,12 +16,12 @@ const Profile = ({navigation}) => {
 
 	const { displayName, email } = authentication.currentUser;
 	return (
-		<Body>
-			<FullCard insetTop={insets.top} insetBottom={insets.bottom + 50}>
+		<Body insetTop={insets.top} insetBottom={insets.bottom + 50}>
+			<FullCard >
 				<Title>{displayName}</Title>
 				<Subtitle>{email}</Subtitle>
 				<StyledButton
-					style={{ background: "red" }}
+					style={{ background: "red", borderWidth: 0 }}
 					onPress={() =>
 						authentication
 							.signOut()

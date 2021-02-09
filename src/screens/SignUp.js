@@ -40,8 +40,8 @@ const SignUp = () => {
 	};
 
 	return (
-		<Body>
-			<FullCard insetTop={insets.top} insetBottom={insets.bottom}>
+		<Body insetTop={insets.top} insetBottom={insets.bottom}>
+			<FullCard >
 				<Title style={{ fontSize: "5vh" }}>Create your account</Title>
 
 				<View>

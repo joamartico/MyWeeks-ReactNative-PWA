@@ -12,13 +12,12 @@ import {
 	Card,
 	FullCard,
 } from "../../constants/styledComponents";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase";
 
-const SignIn = ({navigation}) => {
-
+const SignIn = ({ navigation }) => {
 	const insets = useSafeAreaInsets();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -30,7 +29,14 @@ const SignIn = ({navigation}) => {
 				console.log(user);
 				navigation.navigate("BottomTabs");
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				function getMessage(err) {
+					if(err.code === "auth/user-not-found") return `The email ${email} is not registered`
+					if(err.code === "auth/wrong-password") return `The password is incorrect`
+				}
+				alert(getMessage(err) || err);
+				console.log(err);
+			});
 	};
 
 	const PROVIDER_ID =
@@ -45,17 +51,16 @@ const SignIn = ({navigation}) => {
 		],
 		// signInSuccessUrl: "/bottomtabs/weeks",
 		callbacks: {
-			signInSuccess: () => navigation.replace("BottomTabs")
+			signInSuccess: () => navigation.replace("BottomTabs"),
 		},
-		
 	};
 
 	return (
 		<>
-			<Body>
+			<Body insetTop={insets.top} insetBottom={insets.bottom}>
 				{/* <Title style={{marginTop: 30, fontSize: 30,  }}>Welcome to MyWeeks!</Title> */}
-				<FullCard insetTop={insets.top} insetBottom={insets.bottom}>
-					<Title style={{ fontSize: "5vh", marginTop: "7%" }}>
+				<FullCard>
+					<Title style={{ fontSize: "5vh", marginTop: "4%" }}>
 						Login to your Account
 					</Title>
 					<View>
@@ -107,7 +112,7 @@ const SignIn = ({navigation}) => {
 						<Text
 							style={{
 								color: "gray",
-								marginTop: "8%",
+								marginTop: "10%",
 								marginBottom: "2%",
 								fontSize: 20,
 								textAlign: "center",
@@ -119,8 +124,7 @@ const SignIn = ({navigation}) => {
 							<StyledFirebaseAuth
 								uiConfig={uiConfig}
 								firebaseAuth={authentication}
-								style={{width: "100%!"}}
-								
+								style={{ width: "100%!" }}
 							/>
 
 							{/* <SocialButton style={{ borderColor: "#eb060a" }}>
@@ -164,5 +168,3 @@ const Row = styled.View`
 	align-items: center;
 	margin-bottom: 25px;
 `;
-
-

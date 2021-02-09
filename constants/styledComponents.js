@@ -1,31 +1,34 @@
 import { Dimensions } from "react-native";
 import styled from "styled-components/native";
-import { COLORS } from "./theme";
+import { COLORS, screenHeight, screenWidth } from "./theme";
+
+
 
 export const ScrollBody = styled.ScrollView`
-	height: ${Dimensions.get("window").height};
+	height: ${screenHeight};
 	width: 100vw;
 	background: ${COLORS.bg};
 	padding-left: 10px;
 	padding-right: 10px;
-	aspect-ratio: 1;
 	padding-top: ${({ insetTop }) => insetTop};
 	padding-bottom: ${({ insetBottom }) => insetBottom};
+	aspect-ratio: 1;
 `;
 
 export const Body = styled.SafeAreaView`
-	height: 100vh;
-	width: 100vw;
+	height: ${({ insetBottom, insetTop }) => screenHeight + insetTop };
+	/* width: 100vw; */
+	width: ${screenWidth};
 	background: ${COLORS.bg};
 	padding-left: 10px;
 	padding-right: 10px;
-	aspect-ratio: 1;
-	/* padding-top: ${({ insetTop }) => 20 + insetTop};
-	padding-bottom: ${({ insetBottom }) => 20 + insetBottom}; */
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-top: ${({ insetTop }) => insetTop + 15};
+	padding-bottom: ${({ insetBottom }) => insetBottom + 15};
+	/* padding-top: 10px;
+	padding-bottom: 10px; */
 	align-items: center;
 	justify-content: center;
+	aspect-ratio: 1;
 `;
 
 export const Card = styled.View`
@@ -39,21 +42,31 @@ export const Card = styled.View`
 
 export const FullCard = styled.View`
 	background-color: #fff;
-	width: 100%;
-	/* height: 100%; */
 	padding: 15px;
 	border-radius: 15px;
-	/* margin-bottom: 20px;
-	margin-top: 20px; */
 	padding-top: 25px;
 	padding-bottom: 25px;
-	height: ${({ insetTop, insetBottom }) =>
-		Dimensions.get("window").height - 20 - 20 - insetTop- insetBottom};
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 100%;
+	width: 100%;
+	/* height: ${({ insetTop, insetBottom }) =>
+		Dimensions.get("window").height - insetTop - insetBottom};
+	margin-top: ${({ insetTop }) => insetTop };
+	margin-bottom: ${({ insetBottom }) => insetBottom + 30}; */
 	box-shadow: 0 7px 5px ${() => "#0004"};
 	flex-direction: column;
 	justify-content: space-around;
-	margin-top: ${({ insetTop }) => insetTop && insetTop};
-	margin-bottom: ${({ insetBottom }) => insetBottom && insetBottom};
+	/* position: absolute;
+	bottom: ${({ insetBottom }) => insetBottom + 15};
+	top: ${({ insetTop }) => insetTop + 15};
+	left: 10px;
+	right: 10px; */
+	/* height: ${({ insetTop, insetBottom }) =>
+		Dimensions.get("window").height - 20 - 20 - insetTop - insetBottom}; */
+	
+	
+		
 `;
 
 export const Title = styled.Text`

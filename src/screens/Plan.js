@@ -192,7 +192,8 @@ const Plan = ({ route, navigation }) => {
 				<Card
 					insetTop={85 + insets.top}
 					insetBottom={100 + insets.bottom}
-					style={{ marginTop: 85 + insets.top }}
+					style={{ marginTop: "12vh" }}
+					// style={{marginTop: "50%", marginBottom: "50%"}}
 				>
 					<Subtitle>Objectives</Subtitle>
 
