@@ -27,10 +27,10 @@ const days = [
 	"Sunday",
 ];
 
-function getWeekDate() {
-	const insets = useSafeAreaInsets()
+const nowDate = Temporal.PlainDate.from(Temporal.now.zonedDateTimeISO());
 
-	const nowDate = Temporal.PlainDate.from(Temporal.now.zonedDateTimeISO());
+function getWeekDate() {
+
 	const daysAfterMonday = nowDate.dayOfWeek - 1;
 	const weekDate = nowDate.add({ days: -daysAfterMonday });
 	return weekDate;
@@ -38,7 +38,12 @@ function getWeekDate() {
 
 const Week = ({ navigation, route }) => {
 	const insets = useSafeAreaInsets();
-	const { objectives, setObjectives, actualRoute, setActualRoute } = useContext(Context);
+	const {
+		objectives,
+		setObjectives,
+		actualRoute,
+		setActualRoute,
+	} = useContext(Context);
 	const [date, setDate] = useState(getWeekDate());
 	const [notes, setNotes] = useState("");
 
@@ -74,7 +79,7 @@ const Week = ({ navigation, route }) => {
 						})
 				);
 			});
-		setActualRoute(route.name)
+		setActualRoute(route.name);
 	}, [date, actualRoute]);
 
 	const onChangeDate = (symbol) => {
@@ -173,7 +178,11 @@ const Week = ({ navigation, route }) => {
 				{days.map((day, index) => (
 					<Card key={index}>
 						<Subtitle>
-							{day} {dayDate(index)}
+							{day} 
+							{dayDate(index)} {dayDate(index) == `${nowDate.day}/${nowDate.month}` && (
+							<TodayText>
+								Today
+							</TodayText>)}
 						</Subtitle>
 
 						{objectives
@@ -202,4 +211,9 @@ const Week = ({ navigation, route }) => {
 
 export default Week;
 
+const TodayText = styled.Text`
+	margin-left: auto;
+	font-weight: bold;
 
+
+`

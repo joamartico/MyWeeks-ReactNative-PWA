@@ -49,6 +49,7 @@ const Routes = ({ initialRoute }) => {
 						Onboarding: "/onboarding",
 						BottomTabs: {
 							// path: "bottomtabs",
+
 							screens: {
 								Week: "/week",
 								Plan: "/plan",
@@ -65,6 +66,7 @@ const Routes = ({ initialRoute }) => {
 					headerStyle: {},
 					headerTitleAlign: "center",
 					headerShown: false,
+					title: "MyWeeks App"
 				}}
 				initialRouteName={initialRoute}
 			>
@@ -93,6 +95,7 @@ const Routes = ({ initialRoute }) => {
 					component={Onboarding}
 					options={{
 						headerShown: false,
+						
 					}}
 				/>
 

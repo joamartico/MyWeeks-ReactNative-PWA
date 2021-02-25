@@ -2,8 +2,6 @@ import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 import { COLORS, screenHeight, screenWidth } from "./theme";
 
-
-
 export const ScrollBody = styled.ScrollView`
 	height: ${screenHeight};
 	width: 100vw;
@@ -16,7 +14,7 @@ export const ScrollBody = styled.ScrollView`
 `;
 
 export const Body = styled.SafeAreaView`
-	height: ${({ insetBottom, insetTop }) => screenHeight + insetTop };
+	height: ${({ insetBottom, insetTop }) => screenHeight + insetTop};
 	/* width: 100vw; */
 	width: ${screenWidth};
 	background: ${COLORS.bg};
@@ -52,7 +50,7 @@ export const FullCard = styled.View`
 	width: 100%;
 	/* height: ${({ insetTop, insetBottom }) =>
 		Dimensions.get("window").height - insetTop - insetBottom};
-	margin-top: ${({ insetTop }) => insetTop };
+	margin-top: ${({ insetTop }) => insetTop};
 	margin-bottom: ${({ insetBottom }) => insetBottom + 30}; */
 	box-shadow: 0 7px 5px ${() => "#0004"};
 	flex-direction: column;
@@ -64,9 +62,6 @@ export const FullCard = styled.View`
 	right: 10px; */
 	/* height: ${({ insetTop, insetBottom }) =>
 		Dimensions.get("window").height - 20 - 20 - insetTop - insetBottom}; */
-	
-	
-		
 `;
 
 export const Title = styled.Text`
@@ -78,6 +73,7 @@ export const Title = styled.Text`
 
 export const Subtitle = styled.Text`
 	font-size: 20;
+	display: flex;
 	/* font-weight: bold; */
 	color: ${COLORS.primary};
 	margin-bottom: 8px;
@@ -114,7 +110,7 @@ export const InputObjective = styled.TextInput`
 `;
 
 export const AddButton = styled.TouchableOpacity`
-	background-color: ${COLORS.secondary};
+	background-color: #37d673;
 	height: 35;
 	width: 35;
 	margin-top: 15px;

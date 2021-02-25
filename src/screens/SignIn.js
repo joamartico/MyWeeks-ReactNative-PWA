@@ -60,7 +60,7 @@ const SignIn = ({ navigation }) => {
 			<Body insetTop={insets.top} insetBottom={insets.bottom}>
 				{/* <Title style={{marginTop: 30, fontSize: 30,  }}>Welcome to MyWeeks!</Title> */}
 				<FullCard>
-					<Title style={{ fontSize: "5vh", marginTop: "4%" }}>
+					<Title style={{ fontSize: "5vh", marginTop: "2vh" }}>
 						Login to your Account
 					</Title>
 					<View>
@@ -112,8 +112,8 @@ const SignIn = ({ navigation }) => {
 						<Text
 							style={{
 								color: "gray",
-								marginTop: "10%",
-								marginBottom: "2%",
+								marginTop: "6%",
+								marginBottom: "15",
 								fontSize: 20,
 								textAlign: "center",
 							}}
