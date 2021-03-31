@@ -36,29 +36,29 @@ const Routes = ({ initialRoute }) => {
 	// } else {
 	return (
 		<NavigationContainer
-			linking={{
-				prefixes: [
-					"http://localhost:19006/",
-					"http://192.168.0.11:19006/",
-					"https://myweeks.vercel.app",
-				],
-				config: {
-					screens: {
-						SignIn: "/signin",
-						SignUp: "/signup",
-						Onboarding: "/onboarding",
-						BottomTabs: {
-							// path: "bottomtabs",
+			// linking={{
+			// 	prefixes: [
+			// 		"http://localhost:19006/",
+			// 		"http://192.168.0.11:19006/",
+			// 		"https://myweeks.vercel.app",
+			// 	],
+			// 	config: {
+			// 		screens: {
+			// 			SignIn: "/signin",
+			// 			SignUp: "/signup",
+			// 			Onboarding: "/onboarding",
+			// 			BottomTabs: {
+			// 				// path: "bottomtabs",
 
-							screens: {
-								Week: "/week",
-								Plan: "/plan",
-								Profile: "/profile",
-							},
-						},
-					},
-				},
-			}}
+			// 				screens: {
+			// 					Week: "/week",
+			// 					Plan: "/plan",
+			// 					Profile: "/profile",
+			// 				},
+			// 			},
+			// 		},
+			// 	},
+			// }}
 		>
 			<Stack.Navigator
 				headerMode="screen"

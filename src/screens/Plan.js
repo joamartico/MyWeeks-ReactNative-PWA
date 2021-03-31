@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View } from "react-native";
 import {
 	Card,
 	InputNotes,
 	ScrollBody,
-	AddButton,
 	Subtitle,
 } from "../../constants/styledComponents";
 import WeekHeader from "../components/WeekHeader";
@@ -15,6 +14,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { authentication, db } from "../../firebase";
 import { Context } from "../context/ContextComponent";
 import Objective from "../components/Objective";
+import AddButton from "../components/AddButton";
+
 
 const segmentValues = ["Months", "Years", "Five Years", "Ten Years"];
 
@@ -214,9 +215,7 @@ const Plan = ({ route, navigation }) => {
 							/>
 						))}
 
-					<AddButton onPress={() => onAddObjective()}>
-						<MaterialCommunityIcons name="plus" size={25} />
-					</AddButton>
+					<AddButton onPress={() => onAddObjective()} />
 
 					<Subtitle>Notes</Subtitle>
 

@@ -36,11 +36,14 @@ export const Card = styled.View`
 	border-radius: 15px;
 	margin-top: 20px;
 	box-shadow: 0 7px 5px ${() => "#0004"};
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
 `;
 
 export const FullCard = styled.View`
 	background-color: #fff;
-	padding: 15px;
+	padding: 20px;
 	border-radius: 15px;
 	padding-top: 25px;
 	padding-bottom: 25px;
@@ -48,6 +51,8 @@ export const FullCard = styled.View`
 	margin-bottom: 10px;
 	height: 100%;
 	width: 100%;
+	max-width: 700px;
+	/* max-width: 500px; */
 	/* height: ${({ insetTop, insetBottom }) =>
 		Dimensions.get("window").height - insetTop - insetBottom};
 	margin-top: ${({ insetTop }) => insetTop};
@@ -101,6 +106,7 @@ export const ButtonTitle = styled.Text`
 export const InputNotes = styled.TextInput`
 	width: 100%;
 	font-size: 15px;
+	min-height: 20px;
 `;
 
 export const InputObjective = styled.TextInput`
@@ -109,17 +115,8 @@ export const InputObjective = styled.TextInput`
 	margin-left: auto;
 `;
 
-export const AddButton = styled.TouchableOpacity`
-	background-color: #37d673;
-	height: 35;
-	width: 35;
-	margin-top: 15px;
-	margin-bottom: 20px;
-	align-self: center;
-	border-radius: 10;
-	justify-content: center;
-	align-items: center;
-`;
+
+
 
 export const InputText = styled.TextInput`
 	font-size: 18px;

@@ -3,19 +3,18 @@ import { Pressable, Text } from "react-native";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS } from "../../constants/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import WeekHeader from "../components/WeekHeader";
 import {
 	InputNotes,
 	Subtitle,
 	Card,
 	ScrollBody,
-	AddButton,
 } from "../../constants/styledComponents";
 import { Temporal } from "proposal-temporal";
 import { authentication, db } from "../../firebase";
 import { Context } from "../context/ContextComponent";
 import Objective from "../components/Objective";
+import AddButton from "../components/AddButton";
 
 const days = [
 	"Monday",
@@ -30,7 +29,6 @@ const days = [
 const nowDate = Temporal.PlainDate.from(Temporal.now.zonedDateTimeISO());
 
 function getWeekDate() {
-
 	const daysAfterMonday = nowDate.dayOfWeek - 1;
 	const weekDate = nowDate.add({ days: -daysAfterMonday });
 	return weekDate;
@@ -103,6 +101,7 @@ const Week = ({ navigation, route }) => {
 				order: objectives.length,
 			})
 			.then((res) => {
+				console.log(res);
 				setObjectives([
 					...objectives,
 					{
@@ -157,9 +156,7 @@ const Week = ({ navigation, route }) => {
 							/>
 						))}
 
-					<AddButton onPress={() => onAddObjective("week")}>
-						<MaterialCommunityIcons name="plus" size={25} />
-					</AddButton>
+					<AddButton onPress={() => onAddObjective("week")} />
 
 					<Subtitle>Notes</Subtitle>
 
@@ -178,11 +175,11 @@ const Week = ({ navigation, route }) => {
 				{days.map((day, index) => (
 					<Card key={index}>
 						<Subtitle>
-							{day} 
-							{dayDate(index)} {dayDate(index) == `${nowDate.day}/${nowDate.month}` && (
-							<TodayText>
-								Today
-							</TodayText>)}
+							{`${day} ${dayDate(index)}`}
+							{dayDate(index) ==
+								`${nowDate.day}/${nowDate.month}` && (
+								<TodayText>Today 🎉</TodayText>
+							)}
 						</Subtitle>
 
 						{objectives
@@ -199,9 +196,8 @@ const Week = ({ navigation, route }) => {
 								/>
 							))}
 
-						<AddButton onPress={() => onAddObjective(day)}>
-							<MaterialCommunityIcons name="plus" size={25} />
-						</AddButton>
+						<AddButton onPress={() => onAddObjective(day)} />
+
 					</Card>
 				))}
 			</ScrollBody>
@@ -214,6 +210,5 @@ export default Week;
 const TodayText = styled.Text`
 	margin-left: auto;
 	font-weight: bold;
-
-
-`
+	font-style: 12px !important;
+`;

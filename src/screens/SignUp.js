@@ -36,7 +36,15 @@ const SignUp = () => {
 					})
 					.then(() => navigation.navigate("BottomTabs"));
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				function getMessage(err) {
+					if(err.code === "auth/invalid-email") return `The email ${email} is badly formated`
+					if(err.code === "auth/weak-password") return `The password must be at least 6 characters`
+					if(err.code === "auth/email-already-in-use") return `The email ${email} is already in use by another account.`
+				}
+				alert(getMessage(err) || err);
+				console.log(err);
+			});
 	};
 
 	return (
@@ -91,14 +99,7 @@ const SignUp = () => {
 // 	color: ${COLORS.primary};
 // `;
 
-const Input = styled.TextInput`
-	padding-left: 10px;
-	margin-top: 10px;
-	width: 100%;
-	height: 30px;
-	border-radius: 6px;
-	border-width: 1px;
-`;
+
 
 // const StyledButton = styled.TouchableOpacity`
 // 	margin-top: 20px;

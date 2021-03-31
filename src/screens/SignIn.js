@@ -61,7 +61,7 @@ const SignIn = ({ navigation }) => {
 				{/* <Title style={{marginTop: 30, fontSize: 30,  }}>Welcome to MyWeeks!</Title> */}
 				<FullCard>
 					<Title style={{ fontSize: "5vh", marginTop: "2vh" }}>
-						Login to your Account
+						Login 
 					</Title>
 					<View>
 						<InputText

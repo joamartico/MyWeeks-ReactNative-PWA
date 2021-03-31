@@ -41,8 +41,8 @@ const Onboarding = ({ navigation }) => {
 				<View
 					style={{
 						height: "30%",
-						marginBottom: " auto",
-						marginTop: "20vh",
+						margin: "auto",
+						maxWidth: "550px",
 						// backgroundColor: "red",
 					}}
 				>
@@ -50,7 +50,7 @@ const Onboarding = ({ navigation }) => {
 						Welcome to {""} MyWeeks!
 					</Title>
 
-					<Subtitle style={{ fontSize: "3vh", marginTop: "3vh" }}>
+					<Subtitle style={{ marginTop: "3vh" }}>
 						Your weekly schedule app to manage your time and achive
 						your goals
 					</Subtitle>
@@ -76,15 +76,19 @@ const Onboarding = ({ navigation }) => {
 					<ButtonTitle>Get Started!</ButtonTitle>
 				</StyledButton>
 			</FullCard>
-			<PWAPrompt
-				debug={showPWAPrompt}
-				delay={5}
-				onClose={() =>
-					setTimeout(function () {
-						setShowPWAPrompt(false);
-					}, 300)
-				}
-			/>
+
+			{showPWAPrompt && (
+				<PWAPrompt
+					// debug={showPWAPrompt}
+					debug={true}
+					delay={5}
+					onClose={() =>
+						setTimeout(function () {
+							setShowPWAPrompt(false);
+						}, 300)
+					}
+				/>
+			)}
 		</Body>
 	);
 };

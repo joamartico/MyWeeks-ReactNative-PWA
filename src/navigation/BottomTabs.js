@@ -21,14 +21,12 @@ const BottomTabs = () => {
 	return (
 		<Tab.Navigator
 			backBehavior="none"
-			tabBarOptions={
-				{
-					title: "MyWeeks App"
-					// activeTintColor: COLORS.primary,
-				}
-			}
+			tabBarOptions={{
+				title: "MyWeeks App",
+				// activeTintColor: COLORS.primary,
+			}}
 			tabBar={(props) => (
-				<BlurView tint="light" intensity={90} style={styles.blurView}>
+				<BlurView tint="light" intensity={100} style={styles.blurView}>
 					<BottomTabBar {...props} style={styles.bottomTabBar} />
 				</BlurView>
 			)}

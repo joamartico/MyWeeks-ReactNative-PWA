@@ -1,6 +1,6 @@
 import { BlurView } from "expo-blur";
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS } from '../../constants/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -57,17 +57,16 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
 
 
 		<Header style={{ height: 70 + insetTop, paddingTop: insetTop }}>
-				<Pressable onPress={onPressPrevious}>
+			<Wrapper>
+				<TouchableOpacity onPress={onPressPrevious}>
 					<MaterialCommunityIcons
 						name="chevron-left"
 						size={40}
 						color={COLORS.bg}
 					/>
-				</Pressable>
+				</TouchableOpacity>
 
 				<Title>
-					
-						
 					{time == "weeks" &&`${fromDayMonth} ${fromDayNumber} - ${toDayNumber < 7 ? `${toDayMonth} ` : ""}${toDayNumber}`}
 					{time == "Months" && fromDayMonth}
 					{time == "Years" && date.year}
@@ -76,13 +75,15 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
 				
 				</Title>
 
-				<Pressable onPress={onPressNext}>
+				<TouchableOpacity onPress={onPressNext}>
 					<MaterialCommunityIcons
 						name="chevron-right"
 						size={40}
 						color={COLORS.bg}
 					/>
-				</Pressable>
+				</TouchableOpacity>
+
+				</Wrapper>
 			</Header>
 	);
 };
@@ -97,12 +98,25 @@ const Header = styled.View`
 	border-bottom-color: #6666;
 	border-bottom-width: 1px;
 	flex-direction: row;
-	background-color: #fff;
+	/* background-color: #fff; */
+	background: #fffc;
+	backdrop-filter: blur(16px);
 	z-index: 1000;
-	justify-content: space-evenly;
+	justify-content: center;
 	align-items: center;
 	width: "100%";
 `;
+
+const Wrapper = styled.View`
+	width: 100%;
+	max-width: 700px;
+	height: 100%;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+
+
+`
 
 const styles = StyleSheet.create({
     header: {
