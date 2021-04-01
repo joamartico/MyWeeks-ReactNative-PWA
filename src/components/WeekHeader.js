@@ -1,12 +1,11 @@
 import { BlurView } from "expo-blur";
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { COLORS } from '../../constants/theme';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { COLORS } from "../../constants/theme";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 import { Title } from "../../constants/styledComponents";
-
 
 const months = [
 	"January",
@@ -23,16 +22,21 @@ const months = [
 	"December",
 ];
 
-
-const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
-	
+const WeekHeader = ({
+	children,
+	date,
+	onPressNext,
+	onPressPrevious,
+	time,
+	insetTop,
+}) => {
 	const fromDayNumber = date.day;
 	const fromDayMonthNumber = date.month;
 	const fromDayMonth = months[fromDayMonthNumber - 1];
 
 	const toDayNumber = date.add({ days: 6 }).day;
 	const toDayMonthNumber = date.add({ days: 6 }).month;
-	const toDayMonth =  months[toDayMonthNumber - 1];
+	const toDayMonth = months[toDayMonthNumber - 1];
 
 	return (
 		// <BlurView intensity={90} tint="light" style={[{height: 70 + insets.top, paddingTop: insets.top}, styles.header]} >
@@ -49,14 +53,14 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
 		// 	/>
 		// </BlurView>
 
+		<Header
+			style={{
+				//  height: 70 + insetTop,
+				paddingTop: insetTop,
+			}}
+		>
+			{children && <Wrapper>{children}</Wrapper>}
 
-
-
-
-
-
-
-		<Header style={{ height: 70 + insetTop, paddingTop: insetTop }}>
 			<Wrapper>
 				<TouchableOpacity onPress={onPressPrevious}>
 					<MaterialCommunityIcons
@@ -67,12 +71,16 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
 				</TouchableOpacity>
 
 				<Title>
-					{time == "weeks" &&`${fromDayMonth} ${fromDayNumber} - ${toDayNumber < 7 ? `${toDayMonth} ` : ""}${toDayNumber}`}
+					{time == "weeks" &&
+						`${fromDayMonth} ${fromDayNumber} - ${
+							toDayNumber < 7 ? `${toDayMonth} ` : ""
+						}${toDayNumber}`}
 					{time == "Months" && fromDayMonth}
 					{time == "Years" && date.year}
-					{time == "Five Years" && `${date.year} - ${date.add({years: 5}).year}`}
-					{time == "Ten Years" && `${date.year} - ${date.add({years: 10}).year}`}
-				
+					{time == "Five Years" &&
+						`${date.year} - ${date.add({ years: 5 }).year}`}
+					{time == "Ten Years" &&
+						`${date.year} - ${date.add({ years: 10 }).year}`}
 				</Title>
 
 				<TouchableOpacity onPress={onPressNext}>
@@ -82,9 +90,8 @@ const WeekHeader = ({ date, onPressNext, onPressPrevious, time, insetTop }) => {
 						color={COLORS.bg}
 					/>
 				</TouchableOpacity>
-
-				</Wrapper>
-			</Header>
+			</Wrapper>
+		</Header>
 	);
 };
 
@@ -105,6 +112,7 @@ const Header = styled.View`
 	justify-content: center;
 	align-items: center;
 	width: "100%";
+	flex-direction: column;
 `;
 
 const Wrapper = styled.View`
@@ -114,30 +122,30 @@ const Wrapper = styled.View`
 	flex-direction: row;
 	justify-content: space-evenly;
 	align-items: center;
-
-
-`
+	padding-bottom: 17px;
+	padding-top: 17px;
+`;
 
 const styles = StyleSheet.create({
-    header: {
-	position: "absolute",
-	left: 0,
-	right: 0,
-	top: 0,
-	borderBottomColor: "#6666",
-	borderBottomWidth: 1,
-	flexDirection: "row",
-	backgroundColor: "#fff",
-	zIndex: 1000,
-	justifyContent: "space-evenly",
-	alignItems: "center",
-	width: "100%",
-    },
+	header: {
+		position: "absolute",
+		left: 0,
+		right: 0,
+		top: 0,
+		borderBottomColor: "#6666",
+		borderBottomWidth: 1,
+		flexDirection: "row",
+		backgroundColor: "#fff",
+		zIndex: 1000,
+		justifyContent: "space-evenly",
+		alignItems: "center",
+		width: "100%",
+	},
 
-title: {
-	fontSize: 24,
-	fontWeight: "bold",
-	color: COLORS.primary,
-	alignItems: "center",
-}
+	title: {
+		fontSize: 24,
+		fontWeight: "bold",
+		color: COLORS.primary,
+		alignItems: "center",
+	},
 });

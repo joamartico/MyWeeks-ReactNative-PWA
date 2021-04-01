@@ -16,7 +16,6 @@ import { Context } from "../context/ContextComponent";
 import Objective from "../components/Objective";
 import AddButton from "../components/AddButton";
 
-
 const segmentValues = ["Months", "Years", "Five Years", "Ten Years"];
 
 const getDate = () => {
@@ -26,7 +25,7 @@ const getDate = () => {
 const Plan = ({ route, navigation }) => {
 	const insets = useSafeAreaInsets();
 
-	const { objectives, setObjectives, actualRoute,  } = useContext(Context);
+	const { objectives, setObjectives, actualRoute } = useContext(Context);
 
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [selectedSegment, setSelectedSegment] = useState("Months");
@@ -88,7 +87,8 @@ const Plan = ({ route, navigation }) => {
 	}
 
 	const timeRef =
-		selectedSegment && authentication.currentUser && 
+		selectedSegment &&
+		authentication.currentUser &&
 		db
 			.collection("users")
 			.doc(authentication.currentUser.uid)
@@ -119,12 +119,11 @@ const Plan = ({ route, navigation }) => {
 						})
 				);
 			});
-		
 	}, [date, selectedSegment, actualRoute]);
 
 	useEffect(() => {
-		setDate(getDate())
-	}, [selectedSegment])
+		setDate(getDate());
+	}, [selectedSegment]);
 
 	const onAddObjective = () => {
 		timeRef
@@ -151,45 +150,47 @@ const Plan = ({ route, navigation }) => {
 
 	useEffect(() => {
 		console.log("CAMBIO LA RUTA");
-	}, [actualRoute])
-
-
+	}, [actualRoute]);
 
 	return (
 		<>
-			<View
-				style={{
-					backgroundColor: "transparent",
-					zIndex: 9999999999999,
-					padding: 15,
-					paddingTop: insets.top + 22,
+			{/* <SegmentedControl
+				style={{ zIndex: 999999999, marginTop: insets.top + 15, maxWidth: 700, justifyContent: "center" }}
+				values={segmentValues}
+				selectedIndex={selectedIndex}
+				onChange={(event) => {
+					setSelectedSegment(
+						segmentValues[event.nativeEvent.selectedSegmentIndex]
+					);
+					setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
 				}}
-			>
-				<SegmentedControl
-					style={{ zIndex: 999999999 }}
-					values={segmentValues}
-					selectedIndex={selectedIndex}
-					onChange={(event) => {
-						setSelectedSegment(
-							segmentValues[
-								event.nativeEvent.selectedSegmentIndex
-							]
-						);
-						setSelectedIndex(
-							event.nativeEvent.selectedSegmentIndex
-						);
-					}}
-				/>
-			</View>
+			/> */}
+
 			<WeekHeader
-				insetTop={insets.top + 65}
+				insetTop={insets.top}
 				date={date}
 				time={selectedSegment}
 				onPressNext={() => changeTime(selectedSegment, "+")}
 				onPressPrevious={() => changeTime(selectedSegment, "-")}
+			>
+				<SegmentedControl
+				style={{ zIndex: 999999999,  maxWidth: 700, width: "80%", justifyContent: "center" }}
+				values={segmentValues}
+				selectedIndex={selectedIndex}
+				onChange={(event) => {
+					setSelectedSegment(
+						segmentValues[event.nativeEvent.selectedSegmentIndex]
+					);
+					setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
+				}}
 			/>
+			</WeekHeader>
 
-			<ScrollBody>
+			<ScrollBody
+				showsVerticalScrollIndicator={false}
+				insetTop={70 + insets.top}
+				insetBottom={70 + insets.bottom}
+			>
 				<Card
 					insetTop={85 + insets.top}
 					insetBottom={100 + insets.bottom}
