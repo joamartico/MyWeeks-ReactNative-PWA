@@ -12,6 +12,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PWAPrompt from "react-ios-pwa-prompt";
 import { COLORS } from "../../constants/theme";
 
+
+
+
+
+
 const Onboarding = ({ navigation }) => {
 	const [showPWAPrompt, setShowPWAPrompt] = useState(false);
 	const insets = useSafeAreaInsets();
