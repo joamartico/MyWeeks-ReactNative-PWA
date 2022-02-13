@@ -26,7 +26,8 @@ const days = [
 	"Sunday",
 ];
 
-const nowDate = Temporal.PlainDate.from(Temporal.now.zonedDateTimeISO());
+const DATE = new Date()
+const nowDate = new Temporal.PlainDate(DATE.getFullYear(), DATE.getMonth() + 1, DATE.getDate());
 
 function getWeekDate() {
 	const daysAfterMonday = nowDate.dayOfWeek - 1;
