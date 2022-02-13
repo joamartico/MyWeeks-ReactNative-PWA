@@ -14,9 +14,6 @@ import { COLORS } from "../../constants/theme";
 
 
 
-
-
-
 const Onboarding = ({ navigation }) => {
 	const [showPWAPrompt, setShowPWAPrompt] = useState(false);
 	const insets = useSafeAreaInsets();
